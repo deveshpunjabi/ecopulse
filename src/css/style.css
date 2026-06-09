@@ -962,7 +962,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
   margin-bottom: 28px;
 }
 
-.view-header h1 {
+.view-header h1,
+.view-header .view-title {
   font-size: 2rem;
   margin-bottom: 4px;
 }
@@ -1843,7 +1844,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
     padding: 20px 16px 120px;
   }
 
-  .view-header h1 { font-size: 1.5rem; }
+  .view-header h1,
+  .view-header .view-title { font-size: 1.5rem; }
 
   .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .stat-card { padding: 14px; }

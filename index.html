@@ -87,20 +87,20 @@
                         <div class="step-icon-wrap"><i data-lucide="utensils"></i></div>
                         <h2>Your Diet</h2>
                         <p class="step-desc">Food accounts for ~25% of personal emissions.</p>
-                        <div class="option-grid">
-                            <button class="option-card" data-value="HIGH_MEAT" type="button">
+                        <div class="option-grid" role="radiogroup" aria-label="Select your diet type">
+                            <button class="option-card" data-value="HIGH_MEAT" type="button" role="radio" aria-checked="false">
                                 <div class="oc-icon"><i data-lucide="beef"></i></div>
                                 <h3>Heavy Meat</h3><p>Meat daily</p>
                             </button>
-                            <button class="option-card" data-value="LOW_MEAT" type="button">
+                            <button class="option-card" data-value="LOW_MEAT" type="button" role="radio" aria-checked="false">
                                 <div class="oc-icon"><i data-lucide="egg"></i></div>
                                 <h3>Some Meat</h3><p>2-3x per week</p>
                             </button>
-                            <button class="option-card selected" data-value="VEGETARIAN" type="button">
+                            <button class="option-card selected" data-value="VEGETARIAN" type="button" role="radio" aria-checked="true">
                                 <div class="oc-icon"><i data-lucide="salad"></i></div>
                                 <h3>Vegetarian</h3><p>No meat</p>
                             </button>
-                            <button class="option-card" data-value="VEGAN" type="button">
+                            <button class="option-card" data-value="VEGAN" type="button" role="radio" aria-checked="false">
                                 <div class="oc-icon"><i data-lucide="vegan"></i></div>
                                 <h3>Vegan</h3><p>Plant-based</p>
                             </button>
@@ -112,20 +112,20 @@
                         <div class="step-icon-wrap"><i data-lucide="route"></i></div>
                         <h2>Transport</h2>
                         <p class="step-desc">Often the largest source of personal emissions.</p>
-                        <div class="option-grid">
-                            <button class="option-card" data-value="PETROL_CAR" type="button">
+                        <div class="option-grid" role="radiogroup" aria-label="Select your primary transit mode">
+                            <button class="option-card selected" data-value="PETROL_CAR" type="button" role="radio" aria-checked="true">
                                 <div class="oc-icon"><i data-lucide="car"></i></div>
                                 <h3>Petrol/Diesel</h3><p>Standard car</p>
                             </button>
-                            <button class="option-card" data-value="ELECTRIC_CAR" type="button">
+                            <button class="option-card" data-value="ELECTRIC_CAR" type="button" role="radio" aria-checked="false">
                                 <div class="oc-icon"><i data-lucide="zap"></i></div>
                                 <h3>Electric</h3><p>EV/Hybrid</p>
                             </button>
-                            <button class="option-card" data-value="PUBLIC_TRANSIT" type="button">
+                            <button class="option-card" data-value="PUBLIC_TRANSIT" type="button" role="radio" aria-checked="false">
                                 <div class="oc-icon"><i data-lucide="train-front"></i></div>
                                 <h3>Public Transit</h3><p>Bus/Train</p>
                             </button>
-                            <button class="option-card" data-value="ACTIVE" type="button">
+                            <button class="option-card" data-value="ACTIVE" type="button" role="radio" aria-checked="false">
                                 <div class="oc-icon"><i data-lucide="bike"></i></div>
                                 <h3>Walk/Cycle</h3><p>Zero emission</p>
                             </button>
@@ -146,16 +146,16 @@
                         <div class="step-icon-wrap"><i data-lucide="home"></i></div>
                         <h2>Home Energy</h2>
                         <p class="step-desc">How your home is heated has a significant climate impact.</p>
-                        <div class="option-grid cols-3">
-                            <button class="option-card" data-value="NATURAL_GAS" type="button">
+                        <div class="option-grid cols-3" role="radiogroup" aria-label="Select your home heating source">
+                            <button class="option-card selected" data-value="NATURAL_GAS" type="button" role="radio" aria-checked="true">
                                 <div class="oc-icon"><i data-lucide="flame"></i></div>
                                 <h3>Natural Gas</h3><p>Gas boiler</p>
                             </button>
-                            <button class="option-card" data-value="ELECTRICITY" type="button">
+                            <button class="option-card" data-value="ELECTRICITY" type="button" role="radio" aria-checked="false">
                                 <div class="oc-icon"><i data-lucide="plug-zap"></i></div>
                                 <h3>Electric</h3><p>Heat pump</p>
                             </button>
-                            <button class="option-card" data-value="RENEWABLE" type="button">
+                            <button class="option-card" data-value="RENEWABLE" type="button" role="radio" aria-checked="false">
                                 <div class="oc-icon"><i data-lucide="sun"></i></div>
                                 <h3>Clean Energy</h3><p>Solar/Green</p>
                             </button>
@@ -235,7 +235,7 @@
                 <!-- DASHBOARD -->
                 <div id="view-dashboard" class="view-panel">
                     <div class="view-header">
-                        <h1>Carbon Intelligence Dashboard</h1>
+                        <h2 class="view-title">Carbon Intelligence Dashboard</h2>
                         <p>Track your real-time carbon budget, habits, and virtual forest growth.</p>
                     </div>
                     <!-- Hero Stats -->
@@ -359,7 +359,7 @@
 
                 <!-- LIVE FEED -->
                 <div id="view-feed" class="view-panel hidden">
-                    <div class="view-header"><h1>Live Transaction Feed</h1><p>Simulated banking & IoT transactions processed by the agent pipeline in real-time.</p></div>
+                    <div class="view-header"><h2 class="view-title">Live Transaction Feed</h2><p>Simulated banking & IoT transactions processed by the agent pipeline in real-time.</p></div>
                     <div class="feed-layout">
                         <div class="feed-stream">
                             <div class="feed-header">
@@ -396,7 +396,7 @@
 
                 <!-- AGENT PIPELINE -->
                 <div id="view-pipeline" class="view-panel hidden">
-                    <div class="view-header"><h1>Multi-Agent Pipeline</h1><p>Visualize how EcoPulse processes carbon data through specialized AI agents.</p></div>
+                    <div class="view-header"><h2 class="view-title">Multi-Agent Pipeline</h2><p>Visualize how EcoPulse processes carbon data through specialized AI agents.</p></div>
 
                     <div class="pipeline-visual">
                         <div class="pipeline-nodes">
@@ -440,6 +440,9 @@
                             <h2>Latest Pipeline Output</h2>
                             <div id="pipeline-output" class="pipe-output-content">
                                 <p class="placeholder-text">Click "Run Pipeline" to process a transaction through the agent chain.</p>
+                                <div class="hidden" id="pvc-cards" aria-hidden="true"></div>
+                                <div class="hidden" id="pvc-narrative" aria-hidden="true"></div>
+                                <div class="hidden" id="pvc-raw" aria-hidden="true"></div>
                             </div>
                         </div>
                         <div class="glass-card pipe-log-card">
@@ -451,7 +454,7 @@
 
                 <!-- ANALYTICS -->
                 <div id="view-analytics" class="view-panel hidden">
-                    <div class="view-header"><h1>Analytics</h1><p>Deep dive into your carbon data and trends.</p></div>
+                    <div class="view-header"><h2 class="view-title">Analytics</h2><p>Deep dive into your carbon data and trends.</p></div>
                     <div class="analytics-grid">
                         <div class="glass-card chart-card span-full">
                             <h2><i data-lucide="trending-up"></i> 30-Day Trend</h2>
@@ -480,7 +483,7 @@
 
                 <!-- LEADERBOARD -->
                 <div id="view-leaderboard" class="view-panel hidden">
-                    <div class="view-header"><h1>Eco Rankings & Challenges</h1><p>See how you rank among other EcoPulse users and complete eco-challenges.</p></div>
+                    <div class="view-header"><h2 class="view-title">Eco Rankings & Challenges</h2><p>See how you rank among other EcoPulse users and complete eco-challenges.</p></div>
                     
                     <div class="settings-grid">
                         <div class="glass-card lb-card">
@@ -504,13 +507,13 @@
 
                 <!-- OFFSET MARKETPLACE -->
                 <div id="view-marketplace" class="view-panel hidden">
-                    <div class="view-header"><h1>Offset Marketplace</h1><p>Invest in verified carbon removal and conservation projects.</p></div>
+                    <div class="view-header"><h2 class="view-title">Offset Marketplace</h2><p>Invest in verified carbon removal and conservation projects.</p></div>
                     <div id="marketplace-grid" class="marketplace-grid"></div>
                 </div>
 
                 <!-- SETTINGS -->
                 <div id="view-settings" class="view-panel hidden">
-                    <div class="view-header"><h1>Settings</h1><p>Profile, sync, and privacy controls.</p></div>
+                    <div class="view-header"><h2 class="view-title">Settings</h2><p>Profile, sync, and privacy controls.</p></div>
                     <div class="settings-grid">
                         <div class="glass-card settings-section">
                             <h2><i data-lucide="user"></i> Profile</h2>
@@ -530,9 +533,9 @@
                             <h2><i data-lucide="palette"></i> Interface Theme</h2>
                             <p class="card-subtitle">Choose your visual aesthetic.</p>
                             <div class="theme-switcher">
-                                <button class="theme-btn" data-theme="dark" type="button"><i data-lucide="moon"></i> Dark</button>
-                                <button class="theme-btn" data-theme="light" type="button"><i data-lucide="sun"></i> Light</button>
-                                <button class="theme-btn" data-theme="auto" type="button"><i data-lucide="monitor"></i> Auto</button>
+                                <button class="theme-btn" data-theme="dark" type="button" aria-pressed="false"><i data-lucide="moon"></i> Dark</button>
+                                <button class="theme-btn" data-theme="light" type="button" aria-pressed="false"><i data-lucide="sun"></i> Light</button>
+                                <button class="theme-btn active" data-theme="auto" type="button" aria-pressed="true"><i data-lucide="monitor"></i> Auto</button>
                             </div>
                         </div>
  

@@ -151,6 +151,7 @@ export function renderTrendChart() {
 export function renderBreakdownChart() {
     const ctx = document.getElementById('breakdownChart');
     if (!ctx) return;
+    if (!state.baseline) return;
     if (breakdownChartInstance) breakdownChartInstance.destroy();
 
     const isDark = isDarkMode();

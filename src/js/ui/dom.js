@@ -2,7 +2,7 @@
 // EcoPulse — DOM Controller & Event Coordinator
 // ==========================================
 
-import { state, calculateTotalSaved, recalculateStreak, getLevel, saveLocalStorage, getTodayString, getYesterdayString, loadLocalStorage } from '../state.js';
+import { state, calculateTotalSaved, recalculateStreak, getLevel, saveLocalStorage, getTodayString } from '../state.js';
 import { CARBON_FACTORS, REGION_FACTORS, HABIT_CATALOG, CHALLENGES, ACHIEVEMENTS, OFFSETS, FEED_TRANSACTIONS } from '../constants.js';
 import { initOrbCanvas, updateOrbState } from './orb.js';
 import { renderProceduralForest } from './forest.js';
@@ -123,8 +123,12 @@ export function setupOnboarding() {
         card.addEventListener('click', function() {
             const parent = this.closest('.option-grid');
             if (parent) {
-                parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                parent.querySelectorAll('.option-card').forEach(c => {
+                    c.classList.remove('selected');
+                    c.setAttribute('aria-checked', 'false');
+                });
                 this.classList.add('selected');
+                this.setAttribute('aria-checked', 'true');
             }
         });
     });
@@ -951,7 +955,6 @@ function simulatePipelineFlow(txn, callback) {
         coach: document.getElementById('agent-status-coach')
     };
 
-    const pipeOutput = document.getElementById('pipeline-output');
     const pipeLog = document.getElementById('pipeline-log');
 
     if (!pipeLog) {

@@ -87,6 +87,7 @@ export async function restoreFromCloud(passphrase) {
 }
 
 export function updateSyncLed(status) {
+    if (typeof document === 'undefined') return;
     const led = document.getElementById('sync-led');
     if (!led) return;
     led.className = 'sync-led';
