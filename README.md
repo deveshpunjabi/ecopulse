@@ -295,8 +295,8 @@ Full theme system powered by CSS custom properties. Auto mode follows system pre
 
 ```bash
 # 1. Clone the repository
-git clone <repository-url>
-cd "challenge 3 - Carbon Footprint Awareness Platform"
+git clone https://github.com/deveshpunjabi/ecopulse.git
+cd ecopulse
 
 # 2. Install dev dependencies
 npm install
