@@ -57,8 +57,14 @@ export function switchView(viewId) {
         panel.style.animation = '';
     }
 
-    document.querySelectorAll('.nav-btn, .mob-nav-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll(`[data-view="${viewId}"]`).forEach(b => b.classList.add('active'));
+    document.querySelectorAll('.nav-btn, .mob-nav-btn').forEach(b => {
+        b.classList.remove('active');
+        b.removeAttribute('aria-current');
+    });
+    document.querySelectorAll(`[data-view="${viewId}"]`).forEach(b => {
+        b.classList.add('active');
+        b.setAttribute('aria-current', 'page');
+    });
 
     if (viewId === 'dashboard') {
         renderDashboard();
@@ -780,10 +786,10 @@ function renderPipelineVisualOutput(payload) {
 
     pipeOutput.innerHTML = `
         <div class="pipeline-tabbed-output">
-            <div class="pvo-tabs">
-                <button class="pvo-tab-btn active" data-tab="cards" type="button"><i data-lucide="layout"></i> Cards View</button>
-                <button class="pvo-tab-btn" data-tab="narrative" type="button"><i data-lucide="file-text"></i> Narrative Log</button>
-                <button class="pvo-tab-btn" data-tab="raw" type="button"><i data-lucide="code"></i> Raw Payload</button>
+            <div class="pvo-tabs" role="tablist">
+                <button class="pvo-tab-btn active" data-tab="cards" type="button" role="tab" aria-selected="true"><i data-lucide="layout"></i> Cards View</button>
+                <button class="pvo-tab-btn" data-tab="narrative" type="button" role="tab" aria-selected="false"><i data-lucide="file-text"></i> Narrative Log</button>
+                <button class="pvo-tab-btn" data-tab="raw" type="button" role="tab" aria-selected="false"><i data-lucide="code"></i> Raw Payload</button>
             </div>
 
             <!-- CARDS TAB -->
@@ -891,8 +897,12 @@ function renderPipelineVisualOutput(payload) {
     const tabBtns = pipeOutput.querySelectorAll('.pvo-tab-btn');
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            tabBtns.forEach(b => b.classList.remove('active'));
+            tabBtns.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
             btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
 
             const targetTab = btn.dataset.tab;
             const tabCards = pipeOutput.querySelector('#pvc-cards');
@@ -1173,8 +1183,12 @@ export function setupSettings() {
 
     document.querySelectorAll('.theme-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.theme-btn').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-pressed', 'false');
+            });
             btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'true');
             state.theme = btn.dataset.theme;
             applyTheme(state.theme);
             saveLocalStorage();
@@ -1186,7 +1200,10 @@ export function setupSettings() {
     });
 
     const activeThemeBtn = document.querySelector(`.theme-btn[data-theme="${state.theme}"]`);
-    if (activeThemeBtn) activeThemeBtn.classList.add('active');
+    if (activeThemeBtn) {
+        activeThemeBtn.classList.add('active');
+        activeThemeBtn.setAttribute('aria-pressed', 'true');
+    }
 
     if (state.syncEnabled && state.syncPassphrase) {
         updateSyncLed('active');
