@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EcoPulse — Autonomous Carbon Intelligence Platform</title>
+    <meta name="description" content="An autonomous carbon-intelligence layer that helps you understand, track, and reduce your carbon footprint through multi-agent AI, personalized nudges, and gamified budgets.">
+    <meta name="theme-color" content="#06080A">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+    <!-- Ambient Orbs -->
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+    </div>
+
+    <div id="app-root">
+
+        <!-- ==================== SPLASH ==================== -->
+        <section id="splash-screen" class="screen" aria-label="Loading">
+            <div class="splash-content">
+                <div class="splash-icon-ring">
+                    <i data-lucide="activity" class="splash-icon"></i>
+                </div>
+                <h1 class="splash-title">EcoPulse</h1>
+                <p class="splash-tagline">Autonomous Carbon Intelligence</p>
+                <div class="splash-loader">
+                    <div class="loader-track"><div class="loader-fill"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ONBOARDING ==================== -->
+        <section id="onboarding-screen" class="screen hidden" aria-label="Setup">
+            <div class="onboarding-card glass-card">
+                <div class="onboarding-header">
+                    <div class="ob-logo">
+                        <i data-lucide="activity" class="brand-icon"></i>
+                        <span>EcoPulse</span>
+                    </div>
+                    <span class="step-indicator" id="step-counter">1 / 5</span>
+                </div>
+                <div class="progress-track"><div id="onboarding-progress" class="progress-fill" style="width:20%"></div></div>
+
+                <div class="onboarding-body">
+                    <!-- Step 1 -->
+                    <div class="step-pane active" data-step="1">
+                        <div class="step-icon-wrap"><i data-lucide="globe"></i></div>
+                        <h2>Welcome to EcoPulse</h2>
+                        <p class="step-desc">Your autonomous carbon intelligence layer. We'll set up your profile in 60 seconds. All data stays on your device.</p>
+                        <div class="form-group">
+                            <label for="user-region">Your Region</label>
+                            <select id="user-region">
+                                <option value="US">🇺🇸 United States</option>
+                                <option value="EU" selected>🇪🇺 European Union</option>
+                                <option value="UK">🇬🇧 United Kingdom</option>
+                                <option value="IN">🇮🇳 India</option>
+                                <option value="CN">🇨🇳 China</option>
+                                <option value="GLOBAL">🌍 Global Average</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Household Size</label>
+                            <div class="stepper-input">
+                                <button class="stepper-btn" data-action="dec" type="button">−</button>
+                                <input type="number" id="household-size" value="1" min="1" max="10" readonly>
+                                <button class="stepper-btn" data-action="inc" type="button">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-pane" data-step="2">
+                        <div class="step-icon-wrap"><i data-lucide="utensils"></i></div>
+                        <h2>Your Diet</h2>
+                        <p class="step-desc">Food accounts for ~25% of personal emissions.</p>
+                        <div class="option-grid">
+                            <button class="option-card" data-value="HIGH_MEAT" type="button">
+                                <div class="oc-icon"><i data-lucide="beef"></i></div>
+                                <h3>Heavy Meat</h3><p>Meat daily</p>
+                            </button>
+                            <button class="option-card" data-value="LOW_MEAT" type="button">
+                                <div class="oc-icon"><i data-lucide="egg"></i></div>
+                                <h3>Some Meat</h3><p>2-3x per week</p>
+                            </button>
+                            <button class="option-card selected" data-value="VEGETARIAN" type="button">
+                                <div class="oc-icon"><i data-lucide="salad"></i></div>
+                                <h3>Vegetarian</h3><p>No meat</p>
+                            </button>
+                            <button class="option-card" data-value="VEGAN" type="button">
+                                <div class="oc-icon"><i data-lucide="vegan"></i></div>
+                                <h3>Vegan</h3><p>Plant-based</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step-pane" data-step="3">
+                        <div class="step-icon-wrap"><i data-lucide="route"></i></div>
+                        <h2>Transport</h2>
+                        <p class="step-desc">Often the largest source of personal emissions.</p>
+                        <div class="option-grid">
+                            <button class="option-card" data-value="PETROL_CAR" type="button">
+                                <div class="oc-icon"><i data-lucide="car"></i></div>
+                                <h3>Petrol/Diesel</h3><p>Standard car</p>
+                            </button>
+                            <button class="option-card" data-value="ELECTRIC_CAR" type="button">
+                                <div class="oc-icon"><i data-lucide="zap"></i></div>
+                                <h3>Electric</h3><p>EV/Hybrid</p>
+                            </button>
+                            <button class="option-card" data-value="PUBLIC_TRANSIT" type="button">
+                                <div class="oc-icon"><i data-lucide="train-front"></i></div>
+                                <h3>Public Transit</h3><p>Bus/Train</p>
+                            </button>
+                            <button class="option-card" data-value="ACTIVE" type="button">
+                                <div class="oc-icon"><i data-lucide="bike"></i></div>
+                                <h3>Walk/Cycle</h3><p>Zero emission</p>
+                            </button>
+                        </div>
+                        <div class="form-group mt-16">
+                            <label for="weekly-distance">Weekly distance</label>
+                            <input type="range" id="weekly-distance" min="0" max="500" step="5" value="100">
+                            <div class="range-labels">
+                                <span>0 km</span>
+                                <span class="range-current" id="distance-display">100 km</span>
+                                <span>500 km</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="step-pane" data-step="4">
+                        <div class="step-icon-wrap"><i data-lucide="home"></i></div>
+                        <h2>Home Energy</h2>
+                        <p class="step-desc">How your home is heated has a significant climate impact.</p>
+                        <div class="option-grid cols-3">
+                            <button class="option-card" data-value="NATURAL_GAS" type="button">
+                                <div class="oc-icon"><i data-lucide="flame"></i></div>
+                                <h3>Natural Gas</h3><p>Gas boiler</p>
+                            </button>
+                            <button class="option-card" data-value="ELECTRICITY" type="button">
+                                <div class="oc-icon"><i data-lucide="plug-zap"></i></div>
+                                <h3>Electric</h3><p>Heat pump</p>
+                            </button>
+                            <button class="option-card" data-value="RENEWABLE" type="button">
+                                <div class="oc-icon"><i data-lucide="sun"></i></div>
+                                <h3>Clean Energy</h3><p>Solar/Green</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Baseline -->
+                    <div class="step-pane" data-step="5">
+                        <div class="step-icon-wrap"><i data-lucide="bar-chart-3"></i></div>
+                        <h2>Your Carbon Baseline</h2>
+                        <p class="step-desc">Estimated annual footprint vs Paris Agreement target.</p>
+                        <div class="baseline-result">
+                            <div class="baseline-number">
+                                <span id="baseline-total-value" class="count-up">0</span>
+                                <span class="baseline-unit">kg CO₂e / year</span>
+                            </div>
+                            <div class="baseline-comparison">
+                                <div class="comp-row">
+                                    <span class="comp-label">Paris Target</span>
+                                    <div class="comp-bar-track"><div class="comp-bar-fill green-fill" style="width:25%"></div></div>
+                                    <span class="comp-value">2,000 kg</span>
+                                </div>
+                                <div class="comp-row highlight">
+                                    <span class="comp-label">You</span>
+                                    <div class="comp-bar-track"><div id="user-baseline-bar" class="comp-bar-fill user-fill" style="width:0%"></div></div>
+                                    <span class="comp-value" id="user-baseline-label">0 kg</span>
+                                </div>
+                            </div>
+                            <div class="privacy-badge">
+                                <i data-lucide="shield-check"></i>
+                                <span>100% local. Zero data leaves your device.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="onboarding-footer">
+                    <button id="prev-btn" class="btn btn-ghost hidden" type="button"><i data-lucide="arrow-left"></i> Back</button>
+                    <button id="next-btn" class="btn btn-primary" type="button">Continue <i data-lucide="arrow-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MAIN APP ==================== -->
+        <main id="main-dashboard" class="screen hidden">
+            <!-- Top Nav -->
+            <header class="app-header glass-surface">
+                <div class="header-left">
+                    <div class="brand"><i data-lucide="activity"></i><span>EcoPulse</span></div>
+                    <span id="sync-led" class="sync-led" title="Local Mode"></span>
+                </div>
+                <nav class="main-nav" role="navigation">
+                    <button class="nav-btn active" data-view="dashboard" type="button"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></button>
+                    <button class="nav-btn" data-view="feed" type="button"><i data-lucide="radio"></i><span>Live Feed</span></button>
+                    <button class="nav-btn" data-view="pipeline" type="button"><i data-lucide="workflow"></i><span>Pipeline</span></button>
+                    <button class="nav-btn" data-view="analytics" type="button"><i data-lucide="bar-chart-3"></i><span>Analytics</span></button>
+                    <button class="nav-btn" data-view="leaderboard" type="button"><i data-lucide="trophy"></i><span>Ranks</span></button>
+                    <button class="nav-btn" data-view="marketplace" type="button"><i data-lucide="trees"></i><span>Offsets</span></button>
+                    <button class="nav-btn" data-view="settings" type="button"><i data-lucide="settings"></i><span>Settings</span></button>
+                </nav>
+            </header>
+ 
+            <!-- Mobile Bottom Nav -->
+            <nav class="mobile-bottom-nav glass-surface" role="navigation">
+                <button class="mob-nav-btn active" data-view="dashboard" type="button"><i data-lucide="layout-dashboard"></i><span>Home</span></button>
+                <button class="mob-nav-btn" data-view="feed" type="button"><i data-lucide="radio"></i><span>Feed</span></button>
+                <button class="mob-nav-btn" data-view="pipeline" type="button"><i data-lucide="workflow"></i><span>AI</span></button>
+                <button class="mob-nav-btn" data-view="analytics" type="button"><i data-lucide="bar-chart-3"></i><span>Stats</span></button>
+                <button class="mob-nav-btn" data-view="leaderboard" type="button"><i data-lucide="trophy"></i><span>Ranks</span></button>
+                <button class="mob-nav-btn" data-view="marketplace" type="button"><i data-lucide="trees"></i><span>Offsets</span></button>
+                <button class="mob-nav-btn" data-view="settings" type="button"><i data-lucide="settings"></i><span>More</span></button>
+            </nav>
+ 
+            <!-- ===== VIEWS ===== -->
+            <div class="view-container">
+ 
+                <!-- DASHBOARD -->
+                <div id="view-dashboard" class="view-panel">
+                    <!-- Hero Stats -->
+                    <div class="hero-stats">
+                        <div class="stat-card glass-card">
+                            <div class="stat-icon green"><i data-lucide="trending-down"></i></div>
+                            <div class="stat-body"><span class="stat-value" id="dash-saved">0.0</span><span class="stat-label">kg CO₂ saved</span></div>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-icon orange"><i data-lucide="flame"></i></div>
+                            <div class="stat-body"><span class="stat-value" id="dash-streak">0</span><span class="stat-label">day streak</span></div>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-icon forest"><i data-lucide="tree-pine"></i></div>
+                            <div class="stat-body"><span class="stat-value" id="dash-trees">0</span><span class="stat-label">trees grown</span></div>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-icon purple"><i data-lucide="award"></i></div>
+                            <div class="stat-body"><span class="stat-value" id="dash-level">1</span><span class="stat-label">eco level</span></div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Left Column: Orb + Budget + Equivalency -->
+                        <div class="dashboard-col-left">
+                            <!-- Carbon Pulse Orb -->
+                            <div class="glass-card orb-card">
+                                <div class="pulse-orb-container">
+                                    <canvas id="orbCanvas" width="180" height="180" style="position: absolute; top:0; left:0; pointer-events: none; z-index: 1;"></canvas>
+                                    <div class="pulse-ring" style="z-index: 0;"></div>
+                                    <div class="pulse-ring pulse-ring-2" style="z-index: 0;"></div>
+                                    <div class="pulse-orb" id="pulse-orb" style="z-index: 2; background: transparent; border: none; box-shadow: none;">
+                                        <div class="orb-content">
+                                            <span class="orb-value" id="orb-value">0.0</span>
+                                            <span class="orb-unit">kg saved</span>
+                                            <span class="orb-status" id="orb-status">On Track</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="orb-label">Carbon Pulse</div>
+                            </div>
+
+                            <!-- Carbon Budget -->
+                            <div class="glass-card budget-card">
+                                <div class="card-header">
+                                    <h3><i data-lucide="battery-charging"></i> Carbon Budget</h3>
+                                    <span class="badge" id="budget-percent">100%</span>
+                                </div>
+                                <p class="card-subtitle">Weekly carbon allowance based on your baseline.</p>
+                                <div class="budget-meter">
+                                    <div class="budget-track">
+                                        <div id="budget-fill" class="budget-fill" style="width:100%"></div>
+                                    </div>
+                                    <div class="budget-labels">
+                                        <span id="budget-remaining">0 kg remaining</span>
+                                        <span id="budget-total">of 0 kg</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Equivalency -->
+                            <div class="glass-card equiv-card">
+                                <h3>Your Impact Equals</h3>
+                                <div class="equiv-row">
+                                    <div class="equiv-item"><div class="equiv-icon blue"><i data-lucide="smartphone"></i></div><span class="equiv-val" id="eq-phones">0</span><span class="equiv-label">phone charges</span></div>
+                                    <div class="equiv-item"><div class="equiv-icon green"><i data-lucide="tree-deciduous"></i></div><span class="equiv-val" id="eq-trees">0</span><span class="equiv-label">tree-days</span></div>
+                                    <div class="equiv-item"><div class="equiv-icon amber"><i data-lucide="fuel"></i></div><span class="equiv-val" id="eq-gas">0</span><span class="equiv-label">L petrol</span></div>
+                                    <div class="equiv-item"><div class="equiv-icon red"><i data-lucide="plane"></i></div><span class="equiv-val" id="eq-flight">0</span><span class="equiv-label">km flight</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Checklist + Nudge + Forest -->
+                        <div class="dashboard-col-right">
+                            <!-- Daily Actions -->
+                            <div class="glass-card checklist-card">
+                                <div class="card-header">
+                                    <h3><i data-lucide="check-circle-2"></i> Today's Actions</h3>
+                                    <span class="date-badge" id="date-label">Today</span>
+                                </div>
+                                <p class="card-subtitle">Tap completed actions to track carbon savings.</p>
+                                <div id="daily-checklist" class="checklist-list"></div>
+                                <div id="all-done-msg" class="complete-msg hidden">
+                                    <i data-lucide="party-popper"></i>
+                                    <span>All actions done! 🎉</span>
+                                </div>
+                            </div>
+
+                            <!-- AI Nudge -->
+                            <div class="glass-card insight-card">
+                                <div class="insight-header">
+                                    <div class="insight-icon"><i data-lucide="brain"></i></div>
+                                    <h3>AI Insight</h3>
+                                </div>
+                                <p id="dynamic-insight-text">Analyzing your carbon patterns...</p>
+                            </div>
+
+                            <!-- Forest -->
+                            <div class="glass-card forest-card">
+                                <div class="card-header">
+                                    <h3><i data-lucide="trees"></i> Virtual Forest</h3>
+                                    <span class="badge" id="forest-count">0 trees</span>
+                                </div>
+                                <div class="forest-progress-bar">
+                                    <div id="forest-progress-fill" class="forest-progress-fill" style="width:0%"></div>
+                                    <span id="forest-progress-label" class="forest-progress-label">0/10 kg</span>
+                                </div>
+                                <div class="forest-canvas-wrap" style="position: relative; width: 100%; height: 220px; background: rgba(34, 197, 94, 0.01); border-radius: var(--radius-md); border: 1px dashed var(--border); overflow: hidden; margin-top: 10px;">
+                                    <canvas id="forestCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Mini Chart -->
+                            <div class="glass-card mini-chart-card">
+                                <div class="card-header"><h3><i data-lucide="calendar-days"></i> This Week</h3></div>
+                                <div class="mini-chart-container"><canvas id="miniChart"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVE FEED -->
+                <div id="view-feed" class="view-panel hidden">
+                    <div class="view-header"><h1>Live Transaction Feed</h1><p>Simulated banking & IoT transactions processed by the agent pipeline in real-time.</p></div>
+                    <div class="feed-layout">
+                        <div class="feed-stream">
+                            <div class="feed-header">
+                                <h3><i data-lucide="radio"></i> Incoming Transactions</h3>
+                                <span class="live-dot">● LIVE</span>
+                            </div>
+                            <div id="feed-list" class="feed-list"></div>
+                        </div>
+                        <div class="feed-sidebar">
+                            <div class="glass-card agent-panel">
+                                <h3>Agent Status</h3>
+                                <div class="agent-row"><div class="agent-dot" id="agent-dot-auditor"></div><span>Auditor</span><span class="agent-status" id="agent-status-auditor">Idle</span></div>
+                                <div class="agent-row"><div class="agent-dot" id="agent-dot-quant"></div><span>Quant</span><span class="agent-status" id="agent-status-quant">Idle</span></div>
+                                <div class="agent-row"><div class="agent-dot" id="agent-dot-coach"></div><span>Coach</span><span class="agent-status" id="agent-status-coach">Idle</span></div>
+                            </div>
+                            <div class="glass-card simulation-controls-card" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+                                <h3>Simulation Feeds</h3>
+                                <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: -6px; line-height: 1.4;">Inject active banking, travel, or smart home logs into the agent pipeline.</p>
+                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                    <button class="btn btn-ghost" id="btn-sim-eco" style="padding: 8px 12px; font-size: 0.8rem; justify-content: flex-start; text-align: left; width: 100%;" type="button"><i data-lucide="leaf"></i> Eco-Warrior Commute</button>
+                                    <button class="btn btn-ghost" id="btn-sim-high" style="padding: 8px 12px; font-size: 0.8rem; justify-content: flex-start; text-align: left; width: 100%;" type="button"><i data-lucide="plane"></i> High-Carbon Flight</button>
+                                    <button class="btn btn-ghost" id="btn-sim-home" style="padding: 8px 12px; font-size: 0.8rem; justify-content: flex-start; text-align: left; width: 100%;" type="button"><i data-lucide="home"></i> IoT Smart Heat Pump</button>
+                                </div>
+                            </div>
+                            <div class="glass-card feed-stats">
+                                <h3>Session Stats</h3>
+                                <div class="feed-stat-row"><span>Processed</span><span id="feed-processed">0</span></div>
+                                <div class="feed-stat-row"><span>Total CO₂</span><span id="feed-total-co2">0.0 kg</span></div>
+                                <div class="feed-stat-row"><span>Avg per txn</span><span id="feed-avg-co2">0.0 kg</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AGENT PIPELINE -->
+                <div id="view-pipeline" class="view-panel hidden">
+                    <div class="view-header"><h1>Multi-Agent Pipeline</h1><p>Visualize how EcoPulse processes carbon data through specialized AI agents.</p></div>
+
+                    <div class="pipeline-visual">
+                        <div class="pipeline-nodes">
+                            <div class="pipe-node" id="pipe-input">
+                                <div class="pipe-icon"><i data-lucide="database"></i></div>
+                                <span>Raw Data</span>
+                            </div>
+                            <div class="pipe-connector" id="pipe-conn-1"><div class="pipe-flow"></div></div>
+                            <div class="pipe-node" id="pipe-auditor">
+                                <div class="pipe-icon"><i data-lucide="scan-search"></i></div>
+                                <span>Auditor</span>
+                                <small>Normalize</small>
+                            </div>
+                            <div class="pipe-connector" id="pipe-conn-2"><div class="pipe-flow"></div></div>
+                            <div class="pipe-node" id="pipe-quant">
+                                <div class="pipe-icon"><i data-lucide="calculator"></i></div>
+                                <span>Quant</span>
+                                <small>Calculate</small>
+                            </div>
+                            <div class="pipe-connector" id="pipe-conn-3"><div class="pipe-flow"></div></div>
+                            <div class="pipe-node" id="pipe-coach">
+                                <div class="pipe-icon"><i data-lucide="brain"></i></div>
+                                <span>Coach</span>
+                                <small>Nudge</small>
+                            </div>
+                            <div class="pipe-connector" id="pipe-conn-4"><div class="pipe-flow"></div></div>
+                            <div class="pipe-node" id="pipe-output">
+                                <div class="pipe-icon"><i data-lucide="layout-dashboard"></i></div>
+                                <span>UI Output</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-controls">
+                        <button id="run-pipeline-btn" class="btn btn-primary" type="button"><i data-lucide="play"></i> Run Pipeline</button>
+                        <button id="auto-pipeline-btn" class="btn btn-ghost" type="button"><i data-lucide="repeat"></i> Auto Mode</button>
+                    </div>
+
+                    <div class="pipeline-results">
+                        <div class="glass-card pipe-result-card">
+                            <h3>Latest Pipeline Output</h3>
+                            <div id="pipeline-output" class="pipe-output-content">
+                                <p class="placeholder-text">Click "Run Pipeline" to process a transaction through the agent chain.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card pipe-log-card">
+                            <h3>Processing Log</h3>
+                            <div id="pipeline-log" class="pipe-log"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANALYTICS -->
+                <div id="view-analytics" class="view-panel hidden">
+                    <div class="view-header"><h1>Analytics</h1><p>Deep dive into your carbon data and trends.</p></div>
+                    <div class="analytics-grid">
+                        <div class="glass-card chart-card span-full">
+                            <h3><i data-lucide="trending-up"></i> 30-Day Trend</h3>
+                            <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+                        </div>
+                        <div class="glass-card chart-card">
+                            <h3><i data-lucide="pie-chart"></i> Footprint Breakdown</h3>
+                            <div class="chart-wrap square"><canvas id="breakdownChart"></canvas></div>
+                        </div>
+                        <div class="glass-card chart-card">
+                            <h3><i data-lucide="git-compare"></i> How You Compare</h3>
+                            <div class="comparison-list">
+                                <div class="comp-item"><div class="comp-meta"><span>US Average</span><span>16,000 kg</span></div><div class="comp-track"><div class="comp-fill red-fill" style="width:100%"></div></div></div>
+                                <div class="comp-item"><div class="comp-meta"><span>EU Average</span><span>6,400 kg</span></div><div class="comp-track"><div class="comp-fill amber-fill" style="width:40%"></div></div></div>
+                                <div class="comp-item"><div class="comp-meta"><span>India Avg</span><span>1,900 kg</span></div><div class="comp-track"><div class="comp-fill blue-fill" style="width:12%"></div></div></div>
+                                <div class="comp-item highlight-row"><div class="comp-meta"><span>Your Footprint</span><span id="ana-footprint">0 kg</span></div><div class="comp-track"><div id="ana-footprint-bar" class="comp-fill user-fill" style="width:0%"></div></div></div>
+                                <div class="comp-item"><div class="comp-meta"><span>Paris Target</span><span>2,000 kg</span></div><div class="comp-track"><div class="comp-fill green-fill" style="width:12.5%"></div></div></div>
+                            </div>
+                        </div>
+                        <div class="glass-card chart-card span-full">
+                            <h3><i data-lucide="calendar-range"></i> Activity Heatmap (28 days)</h3>
+                            <div id="heatmap" class="heatmap-grid"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEADERBOARD -->
+                <div id="view-leaderboard" class="view-panel hidden">
+                    <div class="view-header"><h1>Eco Rankings & Challenges</h1><p>See how you rank among other EcoPulse users and complete eco-challenges.</p></div>
+                    
+                    <div class="settings-grid">
+                        <div class="glass-card lb-card">
+                            <h3 class="section-title"><i data-lucide="trophy"></i> Leaderboard</h3>
+                            <div id="leaderboard-table" class="lb-table"></div>
+                        </div>
+                        
+                        <!-- Challenges Section -->
+                        <div class="challenges-section">
+                            <h3 class="section-title"><i data-lucide="zap"></i> Active Challenges</h3>
+                            <div id="active-challenges" class="challenges-grid"></div>
+                        </div>
+
+                        <!-- Achievements Section -->
+                        <div class="challenges-section">
+                            <h3 class="section-title"><i data-lucide="award"></i> Unlocked Achievements</h3>
+                            <div id="achievements-grid" class="achievements-grid"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OFFSET MARKETPLACE -->
+                <div id="view-marketplace" class="view-panel hidden">
+                    <div class="view-header"><h1>Offset Marketplace</h1><p>Invest in verified carbon removal and conservation projects.</p></div>
+                    <div id="marketplace-grid" class="marketplace-grid"></div>
+                </div>
+
+                <!-- SETTINGS -->
+                <div id="view-settings" class="view-panel hidden">
+                    <div class="view-header"><h1>Settings</h1><p>Profile, sync, and privacy controls.</p></div>
+                    <div class="settings-grid">
+                        <div class="glass-card settings-section">
+                            <h3><i data-lucide="user"></i> Profile</h3>
+                            <p class="card-subtitle">Update your lifestyle to recalculate baseline.</p>
+                            <div class="settings-form">
+                                <div class="form-row">
+                                    <div class="form-group"><label for="s-region">Region</label><select id="s-region">
+                                        <option value="US">🇺🇸 United States</option><option value="EU">🇪🇺 EU</option><option value="UK">🇬🇧 UK</option><option value="IN">🇮🇳 India</option><option value="CN">🇨🇳 China</option><option value="GLOBAL">🌍 Global</option>
+                                    </select></div>
+                                    <div class="form-group"><label for="s-household">Household</label><input type="number" id="s-household" min="1" max="10" value="1"></div>
+                                </div>
+                                <button id="save-settings-btn" class="btn btn-primary" type="button"><i data-lucide="save"></i> Save Settings</button>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card settings-section">
+                            <h3><i data-lucide="palette"></i> Interface Theme</h3>
+                            <p class="card-subtitle">Choose your visual aesthetic.</p>
+                            <div class="theme-switcher">
+                                <button class="theme-btn" data-theme="dark" type="button"><i data-lucide="moon"></i> Dark</button>
+                                <button class="theme-btn" data-theme="light" type="button"><i data-lucide="sun"></i> Light</button>
+                                <button class="theme-btn" data-theme="auto" type="button"><i data-lucide="monitor"></i> Auto</button>
+                            </div>
+                        </div>
+ 
+                        <div class="glass-card settings-section">
+                            <h3><i data-lucide="cloud"></i> Encrypted Sync</h3>
+                            <p class="card-subtitle">Zero-knowledge backup. Your passphrase never leaves this device.</p>
+                            <div class="settings-form">
+                                <div class="form-group"><label for="sync-pass">Passphrase</label>
+                                    <div class="password-input-wrap"><input type="password" id="sync-pass" placeholder="8+ characters"><button class="toggle-password" type="button"><i data-lucide="eye"></i></button></div>
+                                </div>
+                                <div class="btn-row">
+                                    <button id="sync-enable-btn" class="btn btn-primary" type="button"><i data-lucide="upload-cloud"></i> Enable Sync</button>
+                                    <button id="sync-restore-btn" class="btn btn-ghost" type="button"><i data-lucide="download-cloud"></i> Restore</button>
+                                </div>
+                                <div id="sync-status" class="sync-status hidden"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card settings-section">
+                            <h3><i data-lucide="shield"></i> Privacy & Data</h3>
+                            <p class="card-subtitle">You own your data. Export or delete anytime.</p>
+                            <div class="btn-row">
+                                <button id="export-btn" class="btn btn-ghost" type="button"><i data-lucide="download"></i> Export JSON</button>
+                                <button id="delete-btn" class="btn btn-danger" type="button"><i data-lucide="trash-2"></i> Delete All</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Toasts -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <script type="module" src="src/js/main.js"></script>
+</body>
+</html>
