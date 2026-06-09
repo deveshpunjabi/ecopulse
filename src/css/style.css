@@ -1171,6 +1171,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .empty-forest p { font-size: 0.85rem; }
 
 /* =================== EQUIVALENCY CARD =================== */
+.equiv-card h2,
 .equiv-card h3 {
   font-size: 0.95rem;
   margin-bottom: 16px;
@@ -1364,6 +1365,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .insight-icon i { width: 18px; height: 18px; }
 
+.insight-card h2,
 .insight-card h3 { font-size: 0.9rem; }
 
 #dynamic-insight-text {
@@ -1387,6 +1389,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .span-full { grid-column: 1 / -1; }
 
+.chart-card h2,
 .chart-card h3 {
   display: flex;
   align-items: center;
@@ -1395,6 +1398,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   margin-bottom: 16px;
 }
 
+.chart-card h2 i,
 .chart-card h3 i { width: 18px; height: 18px; color: var(--green-500); }
 
 .chart-wrap {
@@ -1708,6 +1712,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   max-width: 720px;
 }
 
+.settings-section h2,
 .settings-section h3 {
   display: flex;
   align-items: center;
@@ -1716,6 +1721,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   margin-bottom: 4px;
 }
 
+.settings-section h2 i,
 .settings-section h3 i { width: 18px; height: 18px; color: var(--green-500); }
 
 .settings-form {

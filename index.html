@@ -234,6 +234,10 @@
  
                 <!-- DASHBOARD -->
                 <div id="view-dashboard" class="view-panel">
+                    <div class="view-header">
+                        <h1>Carbon Intelligence Dashboard</h1>
+                        <p>Track your real-time carbon budget, habits, and virtual forest growth.</p>
+                    </div>
                     <!-- Hero Stats -->
                     <div class="hero-stats">
                         <div class="stat-card glass-card">
@@ -277,7 +281,7 @@
                             <!-- Carbon Budget -->
                             <div class="glass-card budget-card">
                                 <div class="card-header">
-                                    <h3><i data-lucide="battery-charging"></i> Carbon Budget</h3>
+                                    <h2><i data-lucide="battery-charging"></i> Carbon Budget</h2>
                                     <span class="badge" id="budget-percent">100%</span>
                                 </div>
                                 <p class="card-subtitle">Weekly carbon allowance based on your baseline.</p>
@@ -294,7 +298,7 @@
 
                             <!-- Equivalency -->
                             <div class="glass-card equiv-card">
-                                <h3>Your Impact Equals</h3>
+                                <h2>Your Impact Equals</h2>
                                 <div class="equiv-row">
                                     <div class="equiv-item"><div class="equiv-icon blue"><i data-lucide="smartphone"></i></div><span class="equiv-val" id="eq-phones">0</span><span class="equiv-label">phone charges</span></div>
                                     <div class="equiv-item"><div class="equiv-icon green"><i data-lucide="tree-deciduous"></i></div><span class="equiv-val" id="eq-trees">0</span><span class="equiv-label">tree-days</span></div>
@@ -309,7 +313,7 @@
                             <!-- Daily Actions -->
                             <div class="glass-card checklist-card">
                                 <div class="card-header">
-                                    <h3><i data-lucide="check-circle-2"></i> Today's Actions</h3>
+                                    <h2><i data-lucide="check-circle-2"></i> Today's Actions</h2>
                                     <span class="date-badge" id="date-label">Today</span>
                                 </div>
                                 <p class="card-subtitle">Tap completed actions to track carbon savings.</p>
@@ -324,7 +328,7 @@
                             <div class="glass-card insight-card">
                                 <div class="insight-header">
                                     <div class="insight-icon"><i data-lucide="brain"></i></div>
-                                    <h3>AI Insight</h3>
+                                    <h2>AI Insight</h2>
                                 </div>
                                 <p id="dynamic-insight-text">Analyzing your carbon patterns...</p>
                             </div>
@@ -332,7 +336,7 @@
                             <!-- Forest -->
                             <div class="glass-card forest-card">
                                 <div class="card-header">
-                                    <h3><i data-lucide="trees"></i> Virtual Forest</h3>
+                                    <h2><i data-lucide="trees"></i> Virtual Forest</h2>
                                     <span class="badge" id="forest-count">0 trees</span>
                                 </div>
                                 <div class="forest-progress-bar">
@@ -346,7 +350,7 @@
 
                             <!-- Mini Chart -->
                             <div class="glass-card mini-chart-card">
-                                <div class="card-header"><h3><i data-lucide="calendar-days"></i> This Week</h3></div>
+                                <div class="card-header"><h2><i data-lucide="calendar-days"></i> This Week</h2></div>
                                 <div class="mini-chart-container"><canvas id="miniChart"></canvas></div>
                             </div>
                         </div>
@@ -359,20 +363,20 @@
                     <div class="feed-layout">
                         <div class="feed-stream">
                             <div class="feed-header">
-                                <h3><i data-lucide="radio"></i> Incoming Transactions</h3>
+                                <h2><i data-lucide="radio"></i> Incoming Transactions</h2>
                                 <span class="live-dot">● LIVE</span>
                             </div>
                             <div id="feed-list" class="feed-list"></div>
                         </div>
                         <div class="feed-sidebar">
                             <div class="glass-card agent-panel">
-                                <h3>Agent Status</h3>
+                                <h2>Agent Status</h2>
                                 <div class="agent-row"><div class="agent-dot" id="agent-dot-auditor"></div><span>Auditor</span><span class="agent-status" id="agent-status-auditor">Idle</span></div>
                                 <div class="agent-row"><div class="agent-dot" id="agent-dot-quant"></div><span>Quant</span><span class="agent-status" id="agent-status-quant">Idle</span></div>
                                 <div class="agent-row"><div class="agent-dot" id="agent-dot-coach"></div><span>Coach</span><span class="agent-status" id="agent-status-coach">Idle</span></div>
                             </div>
                             <div class="glass-card simulation-controls-card" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
-                                <h3>Simulation Feeds</h3>
+                                <h2>Simulation Feeds</h2>
                                 <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: -6px; line-height: 1.4;">Inject active banking, travel, or smart home logs into the agent pipeline.</p>
                                 <div style="display: flex; flex-direction: column; gap: 8px;">
                                     <button class="btn btn-ghost" id="btn-sim-eco" style="padding: 8px 12px; font-size: 0.8rem; justify-content: flex-start; text-align: left; width: 100%;" type="button"><i data-lucide="leaf"></i> Eco-Warrior Commute</button>
@@ -381,7 +385,7 @@
                                 </div>
                             </div>
                             <div class="glass-card feed-stats">
-                                <h3>Session Stats</h3>
+                                <h2>Session Stats</h2>
                                 <div class="feed-stat-row"><span>Processed</span><span id="feed-processed">0</span></div>
                                 <div class="feed-stat-row"><span>Total CO₂</span><span id="feed-total-co2">0.0 kg</span></div>
                                 <div class="feed-stat-row"><span>Avg per txn</span><span id="feed-avg-co2">0.0 kg</span></div>
@@ -433,13 +437,13 @@
 
                     <div class="pipeline-results">
                         <div class="glass-card pipe-result-card">
-                            <h3>Latest Pipeline Output</h3>
+                            <h2>Latest Pipeline Output</h2>
                             <div id="pipeline-output" class="pipe-output-content">
                                 <p class="placeholder-text">Click "Run Pipeline" to process a transaction through the agent chain.</p>
                             </div>
                         </div>
                         <div class="glass-card pipe-log-card">
-                            <h3>Processing Log</h3>
+                            <h2>Processing Log</h2>
                             <div id="pipeline-log" class="pipe-log"></div>
                         </div>
                     </div>
@@ -450,15 +454,15 @@
                     <div class="view-header"><h1>Analytics</h1><p>Deep dive into your carbon data and trends.</p></div>
                     <div class="analytics-grid">
                         <div class="glass-card chart-card span-full">
-                            <h3><i data-lucide="trending-up"></i> 30-Day Trend</h3>
+                            <h2><i data-lucide="trending-up"></i> 30-Day Trend</h2>
                             <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
                         </div>
                         <div class="glass-card chart-card">
-                            <h3><i data-lucide="pie-chart"></i> Footprint Breakdown</h3>
+                            <h2><i data-lucide="pie-chart"></i> Footprint Breakdown</h2>
                             <div class="chart-wrap square"><canvas id="breakdownChart"></canvas></div>
                         </div>
                         <div class="glass-card chart-card">
-                            <h3><i data-lucide="git-compare"></i> How You Compare</h3>
+                            <h2><i data-lucide="git-compare"></i> How You Compare</h2>
                             <div class="comparison-list">
                                 <div class="comp-item"><div class="comp-meta"><span>US Average</span><span>16,000 kg</span></div><div class="comp-track"><div class="comp-fill red-fill" style="width:100%"></div></div></div>
                                 <div class="comp-item"><div class="comp-meta"><span>EU Average</span><span>6,400 kg</span></div><div class="comp-track"><div class="comp-fill amber-fill" style="width:40%"></div></div></div>
@@ -468,7 +472,7 @@
                             </div>
                         </div>
                         <div class="glass-card chart-card span-full">
-                            <h3><i data-lucide="calendar-range"></i> Activity Heatmap (28 days)</h3>
+                            <h2><i data-lucide="calendar-range"></i> Activity Heatmap (28 days)</h2>
                             <div id="heatmap" class="heatmap-grid"></div>
                         </div>
                     </div>
@@ -480,19 +484,19 @@
                     
                     <div class="settings-grid">
                         <div class="glass-card lb-card">
-                            <h3 class="section-title"><i data-lucide="trophy"></i> Leaderboard</h3>
+                            <h2 class="section-title"><i data-lucide="trophy"></i> Leaderboard</h2>
                             <div id="leaderboard-table" class="lb-table"></div>
                         </div>
                         
                         <!-- Challenges Section -->
                         <div class="challenges-section">
-                            <h3 class="section-title"><i data-lucide="zap"></i> Active Challenges</h3>
+                            <h2 class="section-title"><i data-lucide="zap"></i> Active Challenges</h2>
                             <div id="active-challenges" class="challenges-grid"></div>
                         </div>
 
                         <!-- Achievements Section -->
                         <div class="challenges-section">
-                            <h3 class="section-title"><i data-lucide="award"></i> Unlocked Achievements</h3>
+                            <h2 class="section-title"><i data-lucide="award"></i> Unlocked Achievements</h2>
                             <div id="achievements-grid" class="achievements-grid"></div>
                         </div>
                     </div>
@@ -509,7 +513,7 @@
                     <div class="view-header"><h1>Settings</h1><p>Profile, sync, and privacy controls.</p></div>
                     <div class="settings-grid">
                         <div class="glass-card settings-section">
-                            <h3><i data-lucide="user"></i> Profile</h3>
+                            <h2><i data-lucide="user"></i> Profile</h2>
                             <p class="card-subtitle">Update your lifestyle to recalculate baseline.</p>
                             <div class="settings-form">
                                 <div class="form-row">
@@ -523,7 +527,7 @@
                         </div>
                         
                         <div class="glass-card settings-section">
-                            <h3><i data-lucide="palette"></i> Interface Theme</h3>
+                            <h2><i data-lucide="palette"></i> Interface Theme</h2>
                             <p class="card-subtitle">Choose your visual aesthetic.</p>
                             <div class="theme-switcher">
                                 <button class="theme-btn" data-theme="dark" type="button"><i data-lucide="moon"></i> Dark</button>
@@ -533,7 +537,7 @@
                         </div>
  
                         <div class="glass-card settings-section">
-                            <h3><i data-lucide="cloud"></i> Encrypted Sync</h3>
+                            <h2><i data-lucide="cloud"></i> Encrypted Sync</h2>
                             <p class="card-subtitle">Zero-knowledge backup. Your passphrase never leaves this device.</p>
                             <div class="settings-form">
                                 <div class="form-group"><label for="sync-pass">Passphrase</label>
@@ -548,7 +552,7 @@
                         </div>
                         
                         <div class="glass-card settings-section">
-                            <h3><i data-lucide="shield"></i> Privacy & Data</h3>
+                            <h2><i data-lucide="shield"></i> Privacy & Data</h2>
                             <p class="card-subtitle">You own your data. Export or delete anytime.</p>
                             <div class="btn-row">
                                 <button id="export-btn" class="btn btn-ghost" type="button"><i data-lucide="download"></i> Export JSON</button>

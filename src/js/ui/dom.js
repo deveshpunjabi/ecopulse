@@ -17,6 +17,20 @@ let feedStats = { processed: 0, totalCo2: 0 };
 let pipelineActive = false;
 let autoPipelineInterval = null;
 
+function escapeHtml(str) {
+    if (typeof str !== 'string') return str;
+    return str.replace(/[&<>"']/g, function(m) {
+        switch (m) {
+            case '&': return '&amp;';
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '"': return '&quot;';
+            case "'": return '&#039;';
+            default: return m;
+        }
+    });
+}
+
 const INSIGHTS = [
     { condition: s => s.totalSaved === 0 && s.profile.dietType === 'HIGH_MEAT', text: '<strong>Eco nudge (Loss Aversion)</strong>: Skip meat for dinner today to protect your weekly carbon allowance! It saves <strong>4.8 kg CO₂</strong> — equivalent to charging your phone 600 times.' },
     { condition: s => s.totalSaved === 0, text: '<strong>Get started</strong>: Log your first eco-action. A tiny choice today forms a massive habit tomorrow. All data stays 100% on-device.' },
@@ -510,7 +524,7 @@ export function renderLeaderboard() {
         row.className = `lb-row${c.me ? ' me' : ''}`;
         row.innerHTML = `
             <div class="lb-rank ${rankClass}">${rankLabel}</div>
-            <div class="lb-user">${c.name}</div>
+            <div class="lb-user">${escapeHtml(c.name)}</div>
             <div class="lb-streak">🔥 ${c.streak} days</div>
             <div class="lb-val">${c.saved.toFixed(1)} kg</div>
         `;
@@ -547,8 +561,8 @@ export function renderActiveChallenges() {
                     ${isComplete ? '✓ Complete' : 'Active'}
                 </span>
             </div>
-            <h4>${ch.title}</h4>
-            <p>${ch.desc}</p>
+            <h4>${escapeHtml(ch.title)}</h4>
+            <p>${escapeHtml(ch.desc)}</p>
             <div class="challenge-progress">
                 <div class="challenge-progress-fill" style="width:${pct}%"></div>
             </div>
@@ -572,8 +586,8 @@ export function renderAchievements() {
         card.className = `glass-card achievement-card${unlocked ? ' unlocked' : ''}`;
         card.innerHTML = `
             <div class="achievement-icon">${ach.icon}</div>
-            <h4>${ach.title}</h4>
-            <p>${ach.desc}</p>
+            <h4>${escapeHtml(ach.title)}</h4>
+            <p>${escapeHtml(ach.desc)}</p>
         `;
         container.appendChild(card);
     });
@@ -593,8 +607,8 @@ export function renderMarketplace() {
                 <span class="marketplace-badge">${project.badge}</span>
             </div>
             <div class="marketplace-card-body">
-                <h4>${project.title}</h4>
-                <p style="font-size: 0.8rem; line-height: 1.4; color: var(--text-secondary); margin-top: 4px;">${project.desc}</p>
+                <h4>${escapeHtml(project.title)}</h4>
+                <p style="font-size: 0.8rem; line-height: 1.4; color: var(--text-secondary); margin-top: 4px;">${escapeHtml(project.desc)}</p>
             </div>
             <div class="marketplace-card-footer">
                 <div class="marketplace-price">
@@ -687,8 +701,8 @@ function addFeedItem(txn, animate = true) {
             <i data-lucide="${icon}"></i>
         </div>
         <div class="feed-item-body">
-            <div class="feed-item-title">${txn.title}</div>
-            <div class="feed-item-time">${new Date().toLocaleTimeString()} • ${txn.category}</div>
+            <div class="feed-item-title">${escapeHtml(txn.title)}</div>
+            <div class="feed-item-time">${new Date().toLocaleTimeString()} • ${escapeHtml(txn.category)}</div>
         </div>
         <div class="feed-item-val ${txn.type === 'saving' ? 'saving' : 'emission'}">
             ${txn.type === 'saving' ? '-' : '+'}${txn.co2.toFixed(1)} kg
@@ -779,8 +793,8 @@ function renderPipelineVisualOutput(payload) {
                         <div class="pvo-title-wrap">
                             <div class="pvo-icon"><i data-lucide="${icon}"></i></div>
                             <div style="text-align: left;">
-                                <h4 class="pvo-title">${payload.input.title}</h4>
-                                <span class="pvo-meta">${payload.input.category} • $${payload.input.amount.toFixed(2)}</span>
+                                <h4 class="pvo-title">${escapeHtml(payload.input.title)}</h4>
+                                <span class="pvo-meta">${escapeHtml(payload.input.category)} • $${payload.input.amount.toFixed(2)}</span>
                             </div>
                         </div>
                         <span class="pvo-badge ${payload.quant.emissions_kg < 0 ? 'saving' : 'emission'}">
@@ -795,7 +809,7 @@ function renderPipelineVisualOutput(payload) {
                                 <span class="pvo-agent-status status-success">Passed</span>
                             </div>
                             <div class="pvo-agent-body" style="text-align: left;">
-                                <div class="pvo-field"><span class="pvo-label">Class:</span> <span class="pvo-val">${payload.auditor.classification}</span></div>
+                                <div class="pvo-field"><span class="pvo-label">Class:</span> <span class="pvo-val">${escapeHtml(payload.auditor.classification)}</span></div>
                                 <div class="pvo-field"><span class="pvo-label">Amount:</span> <span class="pvo-val">$${payload.auditor.amount.toFixed(2)}</span></div>
                             </div>
                         </div>
@@ -806,8 +820,8 @@ function renderPipelineVisualOutput(payload) {
                                 <span class="pvo-agent-status status-success">Calculated</span>
                             </div>
                             <div class="pvo-agent-body" style="text-align: left;">
-                                <div class="pvo-field"><span class="pvo-label">Source:</span> <span class="pvo-val">${payload.quant.source}</span></div>
-                                <div class="pvo-field"><span class="pvo-label">Grid Mix:</span> <span class="pvo-val">${payload.quant.region_applied} (${payload.quant.grid_intensity_adjustment})</span></div>
+                                <div class="pvo-field"><span class="pvo-label">Source:</span> <span class="pvo-val">${escapeHtml(payload.quant.source)}</span></div>
+                                <div class="pvo-field"><span class="pvo-label">Grid Mix:</span> <span class="pvo-val">${escapeHtml(payload.quant.region_applied)} (${payload.quant.grid_intensity_adjustment})</span></div>
                             </div>
                         </div>
 
@@ -817,8 +831,8 @@ function renderPipelineVisualOutput(payload) {
                                 <span class="pvo-agent-status status-success">Formulated</span>
                             </div>
                             <div class="pvo-agent-body" style="text-align: left;">
-                                <div class="pvo-field"><span class="pvo-label">Framing:</span> <span class="pvo-val highlight">${payload.coach.behavioral_framing}</span></div>
-                                <div class="pvo-nudge">"${payload.coach.nudge_text}"</div>
+                                <div class="pvo-field"><span class="pvo-label">Framing:</span> <span class="pvo-val highlight">${escapeHtml(payload.coach.behavioral_framing)}</span></div>
+                                <div class="pvo-nudge">"${escapeHtml(payload.coach.nudge_text)}"</div>
                             </div>
                         </div>
                     </div>
@@ -832,7 +846,7 @@ function renderPipelineVisualOutput(payload) {
                         <div class="pvo-step-icon">📥</div>
                         <div class="pvo-step-text">
                             <div class="pvo-step-title">1. Raw Data Ingestion</div>
-                            <div class="pvo-step-desc">Ingested raw transaction log: <strong>"${payload.input.title}"</strong> under category <strong>${payload.input.category}</strong> with a financial value of <strong>$${payload.input.amount.toFixed(2)}</strong>.</div>
+                            <div class="pvo-step-desc">Ingested raw transaction log: <strong>"${escapeHtml(payload.input.title)}"</strong> under category <strong>${escapeHtml(payload.input.category)}</strong> with a financial value of <strong>$${payload.input.amount.toFixed(2)}</strong>.</div>
                         </div>
                     </div>
                     
@@ -840,7 +854,7 @@ function renderPipelineVisualOutput(payload) {
                         <div class="pvo-step-icon">🔍</div>
                         <div class="pvo-step-text">
                             <div class="pvo-step-title">2. Auditor Classification</div>
-                            <div class="pvo-step-desc">Auditor parsed the raw text payload. Confirmed activity category as <strong>${payload.auditor.classification}</strong> and normalized unit amounts to match standard LCA registers. Audit status: <span style="color: var(--green-400); font-weight: bold;">SUCCESS</span>.</div>
+                            <div class="pvo-step-desc">Auditor parsed the raw text payload. Confirmed activity category as <strong>${escapeHtml(payload.auditor.classification)}</strong> and normalized unit amounts to match standard LCA registers. Audit status: <span style="color: var(--green-400); font-weight: bold;">SUCCESS</span>.</div>
                         </div>
                     </div>
 
@@ -848,7 +862,7 @@ function renderPipelineVisualOutput(payload) {
                         <div class="pvo-step-icon">📊</div>
                         <div class="pvo-step-text">
                             <div class="pvo-step-title">3. Quant LCA Calculation</div>
-                            <div class="pvo-step-desc">Quant loader evaluated carbon coefficients using <strong>${payload.quant.source}</strong>. Adjusted grid intensity factor for region <strong>${payload.quant.region_applied}</strong> with multiplier coefficient <strong>${payload.quant.grid_intensity_adjustment}</strong>. Final calculated footprint impact: user ${impactText}.</div>
+                            <div class="pvo-step-desc">Quant loader evaluated carbon coefficients using <strong>${escapeHtml(payload.quant.source)}</strong>. Adjusted grid intensity factor for region <strong>${escapeHtml(payload.quant.region_applied)}</strong> with multiplier coefficient <strong>${payload.quant.grid_intensity_adjustment}</strong>. Final calculated footprint impact: user ${impactText}.</div>
                         </div>
                     </div>
 
@@ -856,7 +870,7 @@ function renderPipelineVisualOutput(payload) {
                         <div class="pvo-step-icon">🧠</div>
                         <div class="pvo-step-text">
                             <div class="pvo-step-title">4. Coach Nudge Generation</div>
-                            <div class="pvo-step-desc">Coach agent formulated a behavioral science nudge framed using <strong>${payload.coach.behavioral_framing}</strong> psychology to maximize habit adherence. Nudge payload: <em>"${payload.coach.nudge_text}"</em></div>
+                            <div class="pvo-step-desc">Coach agent formulated a behavioral science nudge framed using <strong>${escapeHtml(payload.coach.behavioral_framing)}</strong> psychology to maximize habit adherence. Nudge payload: <em>"${escapeHtml(payload.coach.nudge_text)}"</em></div>
                         </div>
                     </div>
                 </div>
@@ -865,7 +879,7 @@ function renderPipelineVisualOutput(payload) {
             <!-- RAW JSON TAB -->
             <div class="pvo-tab-content hidden" id="pvc-raw">
                 <div class="pvo-raw-json">
-                    <pre>${JSON.stringify(payload, null, 2)}</pre>
+                    <pre>${escapeHtml(JSON.stringify(payload, null, 2))}</pre>
                 </div>
             </div>
         </div>
